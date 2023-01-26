@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pocketbase_function/model/user_repository.dart';
 import 'package:pocketbase_function/view/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -71,11 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                           password: _password.text);
                     },
                     child: const Text('Đăng nhập')),
-                ElevatedButton(
-                    onPressed: () {
-                      print(pb.authStore.isValid);
-                    },
-                    child: const Text('Check'))
+                ElevatedButton(onPressed: () {}, child: const Text('Check'))
               ],
             ),
           ),

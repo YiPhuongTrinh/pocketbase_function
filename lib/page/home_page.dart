@@ -4,6 +4,7 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:pocketbase_function/constants/base_url.dart';
 import 'package:pocketbase_function/model/user_data.dart';
 import 'package:pocketbase_function/view/provider/login_provider.dart';
+import 'package:pocketbase_function/view/provider/post_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../model/user_repository.dart';
@@ -29,12 +30,18 @@ class _HomePageState extends State<HomePage> {
   String name = '';
   @override
   void initState() {
+    // PostProvider().fetchAllPost();
+    // _userPost = PostProvider().fetchAllPost();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<PostProvider>(context, listen: false).providerFetchPost();
+    });
     model = APILogin().fetchData(widget.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    // List<UserPost> userPost = context.watch<PostProvider>().userPost;
     // final UserModel userModel = context.read<LoginProvider>().userModel;
     return FutureBuilder(
       future: model,
@@ -67,7 +74,31 @@ class _HomePageState extends State<HomePage> {
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
-                      Text(context.watch<LoginProvider>().isValid.toString()),
+                      // Text(context.watch<LoginProvider>().isValid.toString()),
+                      Expanded(
+                        child: Consumer<PostProvider>(
+                          builder: (context, item, child) {
+                            return PostProvider().isLoading == false
+                                ? ListView.builder(
+                                    itemCount: item.userPost.length,
+                                    itemBuilder: (context, index) {
+                                      return Card(
+                                        child: ListTile(
+                                          title:
+                                              Text(item.userPost[index].title),
+                                          subtitle: Text(
+                                              item.userPost[index].description),
+                                          trailing: Image.network(
+                                              '${baseDB}api/files/${item.userPost[index].collectionId}/${item.userPost[index].id}/${item.userPost[index].imagePath[0]}'),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : const Center(
+                                    child: CircularProgressIndicator());
+                          },
+                        ),
+                      )
                     ],
                   ),
                 ),

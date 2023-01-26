@@ -7,49 +7,29 @@ part of 'user_post.dart';
 // **************************************************************************
 
 UserPost _$UserPostFromJson(Map<String, dynamic> json) => UserPost(
-      page: json['page'] as int?,
-      perPage: json['perPage'] as int?,
-      totalPages: json['totalPages'] as int?,
-      totalItems: json['totalItems'] as int?,
-      items: (json['items'] as List<dynamic>?)
-          ?.map((e) => Items.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      json['active'] as bool,
+      json['author'] as String,
+      json['category'] as String,
+      json['collectionId'] as String,
+      json['collectionName'] as String,
+      DateTime.parse(json['created'] as String),
+      json['description'] as String,
+      json['id'] as String,
+      (json['imagePath'] as List<dynamic>).map((e) => e as String).toList(),
+      json['title'] as String,
+      DateTime.parse(json['updated'] as String),
     );
 
 Map<String, dynamic> _$UserPostToJson(UserPost instance) => <String, dynamic>{
-      'page': instance.page,
-      'perPage': instance.perPage,
-      'totalPages': instance.totalPages,
-      'totalItems': instance.totalItems,
-      'items': instance.items,
-    };
-
-Items _$ItemsFromJson(Map<String, dynamic> json) => Items(
-      id: json['id'] as String?,
-      collectionId: json['collectionId'] as String?,
-      collectionName: json['collectionName'] as String?,
-      created: json['created'] as String?,
-      updated: json['updated'] as String?,
-      author: json['author'] as String?,
-      title: json['title'] as String?,
-      description: json['description'] as String?,
-      active: json['active'] as bool?,
-      imagePath: (json['imagePath'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      category: json['category'] as String?,
-    );
-
-Map<String, dynamic> _$ItemsToJson(Items instance) => <String, dynamic>{
       'id': instance.id,
+      'created': instance.created.toIso8601String(),
+      'updated': instance.updated.toIso8601String(),
       'collectionId': instance.collectionId,
       'collectionName': instance.collectionName,
-      'created': instance.created,
-      'updated': instance.updated,
-      'author': instance.author,
-      'title': instance.title,
-      'description': instance.description,
       'active': instance.active,
-      'imagePath': instance.imagePath,
+      'author': instance.author,
       'category': instance.category,
+      'description': instance.description,
+      'imagePath': instance.imagePath,
+      'title': instance.title,
     };

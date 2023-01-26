@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pocketbase_function/page/login_page.dart';
 import 'package:pocketbase_function/view/provider/login_provider.dart';
+import 'package:pocketbase_function/view/provider/post_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
+        ChangeNotifierProvider<PostProvider>(create: (_) => PostProvider())
       ],
       child: MaterialApp(
         title: 'PocketBase Function',
