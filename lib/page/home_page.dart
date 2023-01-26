@@ -36,46 +36,44 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // final UserModel userModel = context.read<LoginProvider>().userModel;
-    return SafeArea(
-      child: FutureBuilder(
-        future: model,
-        builder: (context, snapshot) {
-          final db = snapshot.data;
-          return snapshot.hasData
-              ? Scaffold(
-                  appBar: AppBar(
-                    title: Text('${db?.name}'),
-                    actions: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.network(
-                          '${baseDB}api/files/${db?.collectionName}/${db?.id}/${db?.avatar}',
-                        ),
+    return FutureBuilder(
+      future: model,
+      builder: (context, snapshot) {
+        final db = snapshot.data;
+        return snapshot.hasData
+            ? Scaffold(
+                appBar: AppBar(
+                  title: Text('${db?.name}'),
+                  actions: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.network(
+                        '${baseDB}api/files/${db?.collectionName}/${db?.id}/${db?.avatar}',
                       ),
-                      IconButton(
-                          onPressed: () {
-                            context.read<LoginProvider>().userLogout();
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginPage(),
-                                ));
-                          },
-                          icon: const Icon(Icons.logout_outlined)),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          context.read<LoginProvider>().userLogout();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginPage(),
+                              ));
+                        },
+                        icon: const Icon(Icons.logout_outlined)),
+                  ],
+                ),
+                body: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Text(context.watch<LoginProvider>().isValid.toString()),
                     ],
                   ),
-                  body: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      children: [
-                        Text(context.watch<LoginProvider>().isValid.toString()),
-                      ],
-                    ),
-                  ),
-                )
-              : const Center(child: CircularProgressIndicator());
-        },
-      ),
+                ),
+              )
+            : const Center(child: CircularProgressIndicator());
+      },
     );
   }
 }
