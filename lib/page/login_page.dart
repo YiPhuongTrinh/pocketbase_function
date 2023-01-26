@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text('Đăng Nhập',
-                    style: Theme.of(context).textTheme.headlineLarge),
+                    style: Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(
                   height: 20,
                 ),
@@ -39,7 +39,10 @@ class _LoginPageState extends State<LoginPage> {
                       value = _username.text;
                     });
                   },
-                  decoration: const InputDecoration(hintText: 'Tài khoản'),
+                  decoration: const InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: 'Vui lòng nhập tài khoản',
+                      labelText: 'Tên đăng nhập'),
                 ),
                 const SizedBox(
                   height: 20,
@@ -51,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
                       value = _password.text;
                     });
                   },
-                  decoration: const InputDecoration(hintText: 'Mật khẩu'),
+                  decoration: const InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: 'Vui lòng nhập mật khẩu',
+                      labelText: 'Mật khẩu'),
                 ),
                 const SizedBox(
                   height: 20,

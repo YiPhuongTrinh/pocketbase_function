@@ -20,21 +20,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late UserModel _userModel;
+  late Future<UserModel> model;
   @override
   void initState() {
-    _userModel = APILogin().fetchData(widget.id);
+    model = APILogin().fetchData(widget.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    // final UserModel userModel = context.read<LoginProvider>().userModel;
     return Scaffold(
-        appBar: AppBar(title: Text(widget.id)),
-        body: ElevatedButton(
-            onPressed: () {
-              print(_userModel);
-            },
-            child: const Text('Press me')));
+      appBar: AppBar(title: Text(widget.id)),
+      body: FutureBuilder(
+          future: model,
+          builder: (context, snapshot) {
+            return Column(
+              children: [
+                Text('${snapshot.data?.avatar}'),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Click me'),
+                ),
+              ],
+            );
+          }),
+    );
   }
 }

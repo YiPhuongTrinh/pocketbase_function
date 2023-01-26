@@ -6,12 +6,14 @@ import '../constants/base_url.dart';
 final pb = PocketBase(baseDB);
 
 class APILogin {
-  fetchData(String id) async {
-    final record = await pb
-        .collection('users')
-        .getOne(id)
-        .then((value) => UserModel.fromRecord(value));
-
+  late UserModel model;
+  Future<UserModel> fetchData(String id) async {
+    final record = await pb.collection('users').getOne(id).then((value) {
+      print(value);
+      return UserModel.fromRecord(value);
+    }).catchError((onError) {
+      return print(onError);
+    });
     return record;
   }
 }
