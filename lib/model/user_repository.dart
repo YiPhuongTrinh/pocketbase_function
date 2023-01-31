@@ -13,7 +13,6 @@ class APILogin {
   late UserData model;
   Future<UserData> fetchData(String id) async {
     final record = await pb.collection('users').getOne(id).then((value) {
-      print(value);
       return UserData.fromRecord(value);
     }).catchError((onError) {
       return print(onError);
