@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 part 'user_post.g.dart';
 
 @JsonSerializable()
-class UserPost {
+class UserPost extends Equatable {
   String id;
   DateTime created;
   DateTime updated;
@@ -40,4 +41,19 @@ class UserPost {
 
   factory UserPost.fromRecord(RecordModel record) =>
       UserPost.fromJson(record.toJson());
+
+  @override
+  List<Object?> get props => [
+        id,
+        created,
+        updated,
+        collectionId,
+        collectionName,
+        active,
+        author,
+        category,
+        description,
+        imagePath,
+        title
+      ];
 }

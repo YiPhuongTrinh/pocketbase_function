@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
-        ChangeNotifierProvider<PostProvider>(create: (_) => PostProvider())
+        ChangeNotifierProvider<PostProvider>(create: (_) => PostProvider()),
+        ChangeNotifierProvider(create: (_) => SinglePostProvider()),
       ],
       child: MaterialApp(
         title: 'PocketBase Function',

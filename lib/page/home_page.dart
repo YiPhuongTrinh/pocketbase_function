@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:pocketbase_function/constants/base_url.dart';
 import 'package:pocketbase_function/model/user_data.dart';
+import 'package:pocketbase_function/page/details_page.dart';
 import 'package:pocketbase_function/view/provider/login_provider.dart';
 import 'package:pocketbase_function/view/provider/post_provider.dart';
 import 'package:provider/provider.dart';
@@ -50,12 +51,14 @@ class _HomePageState extends State<HomePage> {
         return snapshot.hasData
             ? Scaffold(
                 appBar: AppBar(
+                  toolbarHeight: 75,
                   title: Text('${db?.name}'),
                   actions: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: Image.network(
                         '${baseDB}api/files/${db?.collectionName}/${db?.id}/${db?.avatar}',
+                        scale: 12,
                       ),
                     ),
                     IconButton(
@@ -82,14 +85,28 @@ class _HomePageState extends State<HomePage> {
                                 ? ListView.builder(
                                     itemCount: item.userPost.length,
                                     itemBuilder: (context, index) {
-                                      return Card(
-                                        child: ListTile(
-                                          title:
-                                              Text(item.userPost[index].title),
-                                          subtitle: Text(
-                                              item.userPost[index].description),
-                                          trailing: Image.network(
-                                              '${baseDB}api/files/${item.userPost[index].collectionId}/${item.userPost[index].id}/${item.userPost[index].imagePath[0]}'),
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailsPage(
+                                                        id: item.userPost[index]
+                                                            .id),
+                                              ));
+                                        },
+                                        child: Card(
+                                          child: ListTile(
+                                            title: Text(
+                                                item.userPost[index].title),
+                                            subtitle: Text(
+                                              item.userPost[index].description,
+                                              maxLines: 4,
+                                            ),
+                                            trailing: Image.network(
+                                                '${baseDB}api/files/${item.userPost[index].collectionId}/${item.userPost[index].id}/${item.userPost[index].imagePath[0]}'),
+                                          ),
                                         ),
                                       );
                                     },
