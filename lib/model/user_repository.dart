@@ -58,6 +58,8 @@ class APILogin {
           filter: "postID.id='$postId'",
         )
         .then((value) => value.items.forEach((element) {
+              userComment.removeWhere((e) => e.id == element.id);
+
               userComment
                   .add(UserComment.fromJson(jsonDecode(element.toString())));
             }))
